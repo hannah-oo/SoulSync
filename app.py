@@ -20,5 +20,9 @@ def login():
 def recommendation():
     return render_template('recommendation.html')
 
+@app.route('/user-profile')
+def user_profile():
+    return render_template('user-profile.html')
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, use_reloader=True)
