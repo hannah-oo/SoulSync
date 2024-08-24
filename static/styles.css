@@ -1,0 +1,129 @@
+html, body {
+    overflow: hidden; /* Prevents scrolling */
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.center-containter{
+    display: flex;
+    justify-content: center; /* Horizontal center */
+    align-items: center; /* Vertical center */
+    height: 100vh;
+}
+
+.rounded-rectangle{
+    width: 672px; 
+    height: 500px; 
+    background-color: rgba(243, 224, 255, 0.5); /* Semi-transparent */
+    border-radius: 25px; /* Rounded corners */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rounded-smaller-rectangle{
+    width: 672px; 
+    height: 400px;
+    background-color: rgba(243, 224, 255, 0.5); /* Semi-transparent */
+    border-radius: 25px; 
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position:absolute;
+}
+
+.title{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 70px;
+    font-family: Georgia;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.comment{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Georgia;
+    margin-top: 0px;
+}
+
+h2.comment{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: Georgia;
+    margin-top: 0px;
+}
+
+.account-register-text{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: Georgia;
+    margin-top: 0px;
+}
+
+.enter-username{
+    width: 400px; /* Adjust width as needed */
+    height: 50px;
+    padding: 15px; /* Padding inside the textarea */
+    font-size: 16px; /* Font size for the text */
+    border: 1px solid #ccc; /* Border color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
+    resize: none; /* Prevents resizing */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    display: block;
+    margin: 0 auto;
+}
+
+.btn {
+    background-color: #000000;
+    border: none;
+    color: white;
+    padding: 5px 3px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 380px;
+    height: 20px;
+}
+
+.btn:hover {
+    background-color: #b870d4;
+}
+
+.x-btn {
+    position: absolute;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    top: 10px;
+    right: 10px;
+}

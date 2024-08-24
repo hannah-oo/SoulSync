@@ -5,8 +5,16 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 @app.route('/')
-def home():
-    return render_template('main.html')
+def welcome():
+    return render_template('welcome.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True, use_reloader=True)
