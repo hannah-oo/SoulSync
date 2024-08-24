@@ -26,8 +26,8 @@ html, body {
 
 .rounded-smaller-rectangle{
     width: 672px; 
-    height: 400px;
-    background-color: rgba(243, 224, 255, 0.5); /* Semi-transparent */
+    height: 425px;
+    background-color: rgba(243, 224, 255, 0.5);
     border-radius: 25px; 
     top: 55%;
     left: 50%;
@@ -77,18 +77,38 @@ h2.comment{
 }
 
 .enter-username{
-    width: 400px; /* Adjust width as needed */
-    height: 50px;
-    padding: 15px; /* Padding inside the textarea */
-    font-size: 16px; /* Font size for the text */
-    border: 1px solid #ccc; /* Border color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
-    resize: none; /* Prevents resizing */
-    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    width: 400px; 
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    resize: none; 
+    box-sizing: border-box;
     display: block;
     margin: 0 auto;
 }
 
+.dropdown-country{
+    width: 400px; /* Width of the dropdown */
+    margin: 0 auto; 
+}
+
+.dropdown{
+    width:100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    resize: none; 
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+    font-family: monospace;
+    color: #7a7474;
+    background-color: #FFFFFF;
+}
 .btn {
     background-color: #000000;
     border: none;
@@ -117,7 +137,7 @@ h2.comment{
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 23.5px;
     font-family: sans-serif;
     margin: 10px;
     border-radius: 5px;
@@ -126,4 +146,8 @@ h2.comment{
     height: 30px;
     top: 10px;
     right: 10px;
+}
+
+.x-btn:hover {
+    background-color: #b870d4;
 }
