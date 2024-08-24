@@ -1,0 +1,23 @@
+{
+    "depressed": {
+        "countries": [
+            ["country_name", 3],
+            ["country_name2", 2]
+        ],
+        "posts": []
+    },
+    "boyfriend": [],
+    "relationship": [],
+    "gay": [],
+    "lesbian": [],
+    "bisexual": [],
+    "breakup": [],
+    "breakdown": [],
+    "gender": [],
+    "empty": [],
+    "ex": [],
+    "failure": [],
+    "fat": [],
+    "bodyshaming": [],
+    "girlfriend": []
+}
