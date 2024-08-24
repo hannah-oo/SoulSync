@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Thoughts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+        h1, h2 {
+            color: #00796b;
+        }
+        .post-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .post-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .reaction-buttons {
+            margin-top: 10px;
+        }
+        .reaction-buttons button {
+            background-color: #00796b;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .reaction-buttons button:hover {
+            background-color: #004d40;
+        }
+        .delete-button {
+            background-color: #e57373;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+        textarea {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        select {
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+        input[type="text"] {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Share Your Thoughts</h1>
+
+<!-- Section to filter posts by hashtag -->
+<h2>Filter Posts by Hashtag</h2>
+<input type="text" id="hashtag-filter" placeholder="Enter a hashtag (e.g., #happy)">
+<button onclick="filterPosts()">Filter</button>
+
+<!-- Section where filtered posts will be displayed -->
+<div id="filtered-post-list">
+    <!-- Filtered posts will be dynamically added here -->
+</div>
+
+<!-- Section to create a new post -->
+<h2>Create a New Post</h2>
+<textarea id="new-post-content" placeholder="What's on your mind?" rows="4"></textarea>
+<br>
+<label for="current-emotion">Current Emotion:</label>
+<select id="current-emotion">
+    <option value="happy">Happy</option>
+    <option value="sad">Sad</option>
+    <option value="anxious">Anxious</option>
+    <option value="angry">Angry</option>
+</select>
+<br><br>
+<button onclick="createPost()">Post</button>
+
+<script>
+    let posts = [];
+
+    // Function to display filtered posts based on hashtag
+    function filterPosts() {
+        const hashtag = document.getElementById('hashtag-filter').value.trim().toLowerCase();
+        const filteredPostList = document.getElementById('filtered-post-list');
+        filteredPostList.innerHTML = ''; // Clear previous filtered posts
+
+        // Filter posts that contain the hashtag
+        const filteredPosts = posts.filter(post => post.content.toLowerCase().includes(hashtag));
+
+        // Display each filtered post
+        filteredPosts.forEach((post, index) => {
+            const postContainer = document.createElement('div');
+            postContainer.className = 'post-container';
+
+            const postContent = document.createElement('p');
+            postContent.className = 'post-content';
+            postContent.textContent = `${post.content} (Feeling: ${post.emotion})`;
+            postContainer.appendChild(postContent);
+
+            const reactionButtons = document.createElement('div');
+            reactionButtons.className = 'reaction-buttons';
+
+            ['❤️', '👍', '🌟'].forEach(emoji => {
+                const button = document.createElement('button');
+                button.textContent = emoji;
+                button.onclick = () => reactToPost(index, emoji);
+                reactionButtons.appendChild(button);
+            });
+
+            postContainer.appendChild(reactionButtons);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-button';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = () => removePost(index);
+            postContainer.appendChild(deleteButton);
+
+            filteredPostList.appendChild(postContainer);
+        });
+
+        // Handle case where no posts match the hashtag
+        if (filteredPosts.length === 0) {
+            const noMatchMessage = document.createElement('p');
+            noMatchMessage.textContent = 'No posts match this hashtag.';
+            filteredPostList.appendChild(noMatchMessage);
+        }
+    }
+
+    // Function to create a new post
+    function createPost() {
+        const content = document.getElementById('new-post-content').value;
+        const emotion = document.getElementById('current-emotion').value;
+
+        if (content.trim()) {
+            posts.push({ content, emotion });
+            document.getElementById('new-post-content').value = '';
+            filterPosts(); // Automatically apply the current filter after adding a new post
+        } else {
+            alert('Please write something before posting!');
+        }
+    }
+
+    // Function to remove a post
+    function removePost(index) {
+        if (confirm('Are you sure you want to delete this post?')) {
+            posts.splice(index, 1);
+            filterPosts(); // Reapply the filter after deleting a post
+        }
+    }
+
+    // Function to handle reactions to a post
+    function reactToPost(index, emoji) {
+        alert(`You reacted to the post with ${emoji}`);
+    }
+</script>
+</body>
+</html>
