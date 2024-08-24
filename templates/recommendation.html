@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+
+    <title>Recommendation</title>
+</head>
+
+<body>
+    <div class="choose-three-hashtags">
+        <h2 class = "comment">Select 3</h2>
+        <div class="hashtags">
+            <div class="hashtag" onclick="selectHashtag(this)">Depression</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Anxiety</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Toxic</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Stress</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Failure</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Gay</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Relationship</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Bisexual</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Breakup</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Gender</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Empty</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Bodyshaming</div>
+            <div class="hashtag" onclick="selectHashtag(this)">Domestic Violence</div>
+        </div>
+        <br><br>
+        <h3 class = "comment">Welcome to SoulSync where <br> people can have a safe space to <br> share their thoughts <br> anonymously</h3>
+        <a id="proceed" class="btn" href={{ url_for('home') }}>Proceed</a>
+    </div>
+
+    <script src="static/scripts.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="center-containter">
+        <div class="rounded-rectangle">
+            <h6 class = "title">Soul Sync</h6>
+            <h6 class = "comment">Messages from the toughest times</h6>
+            <a href="/" class="x-btn">&times;</a>
+            <h2 class = "comment">Login</h2>
+            <textarea class = "enter-username" placeholder="Username"></textarea><br><br>
+            <textarea class = "enter-username" placeholder="Password"></textarea><br><br>
+            <a href={{ url_for('home') }} class="btn" onclick="login">LOGIN</a><br>
+            <p class="account-register-text"> Don't have an account? <a href="signup.html">Register</a></p>
+        </div>
+    </div>
+
+    <script>
+        function isValidURL(string) {
+           if (string.length == 0) {
+               return false;
+           }
+           if (string[0] == "/") {
+               return true;
+           }
+           return false;
+       }
+       // this function is identical to login(), see login.jinja
+       async function login() {
+           let loginURL = "{{ url_for('login_user') }}";
+           let res = await axios.post(loginURL, {
+               username: $(".enter-username").val()
+           });
+           if (!isValidURL(res.data)) {
+               alert(res.data);
+               return;
+           }
+           window.open(res.data, "_self")
+       }
+   </script>
+
+</body>
+</html>

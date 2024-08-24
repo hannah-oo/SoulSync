@@ -1,23 +1,27 @@
 {
-    "depressed": {
+    "depression": {
         "countries": [
-            ["country_name", 3],
-            ["country_name2", 2]
+            {"lat": 51.505, "lon": -0.09, "number": 1},
+            {"lat": 21.515, "lon": -0.1, "number": 2},
+            {"lat": 31.525, "lon": -0.12, "number": 7}
         ],
-        "posts": []
+        "posts": [{"Anna": "No one loves me"},
+                {"Bob": "I don't feeling like living"},
+                {"Cinderella": "What's the meaning of life?"}]
     },
-    "boyfriend": [],
-    "relationship": [],
-    "gay": [],
-    "lesbian": [],
-    "bisexual": [],
-    "breakup": [],
-    "breakdown": [],
-    "gender": [],
-    "empty": [],
-    "ex": [],
-    "failure": [],
-    "fat": [],
-    "bodyshaming": [],
-    "girlfriend": []
+    "toxic": {},
+    "relationship": {},
+    "gay": {},
+    "bisexual": {},
+    "breakup": {},
+    "breakdown": {},
+    "gender": {},
+    "empty": {},
+    "failure": {},
+    "bodyshaming": {},
+    "domestic violence": {},
+    "anxiety": {},
+    "lonely": {},
+    "family": {},
+    "stressed": {}
 }

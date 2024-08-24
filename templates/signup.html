@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Sign up</title>
+</head>
+
+<body>
+    <div class="center-containter">
+        <div class="rounded-rectangle">
+            <h6 class = "title">Soul Sync</h6>
+            <h6 class = "comment">Messages from the toughest times</h6>
+            <a href="/" class="x-btn">&times;</a>
+            <h2 class = "comment">Registration</h2>
+            <textarea class = "enter-username" placeholder="Username"></textarea><br>
+            <div class="dropdown-country">
+                <label for="countryDropdown"></label>
+                <select id="countryDropdown" class="dropdown">
+                    <option value="" selected disabled>Select a location</option>
+                    <option value="australia">Australia</option>
+                    <option value="china">China</option>
+                    <option value="india">India</option>
+                    <option value="indonesia">Indonesia</option>
+                    <option value="japan">Japan</option>
+                    <option value="malaysia">Malaysia</option>
+                    <option value="pakistan">Pakistan</option>
+                    <option value="united-states">United States</option>
+                    <option value="vietnam">Vietnam</option>
+                </select>
+            </div><br>
+            <textarea class = "enter-username" placeholder="Password"></textarea><br>
+            <a href={{ url_for('recommendation') }} class="btn" onclick="signup()">REGISTER</a><br>
+        </div>
+    </div>
+    <script src="static/scripts.js"></script>
+
+    <script>
+        function isValidURL(string) {
+           if (string.length == 0) {
+               return false;
+           }
+           if (string[0] == "/") {
+               return true;
+           }
+           return false;
+       }
+       // this function is identical to login(), see login.jinja
+       async function signup() {
+           let loginURL = "{{ url_for('signup_user') }}";
+           let res = await axios.post(loginURL, {
+               username: $(".enter-username").val(),
+               country: $("#countryDropdown").val()
+           });
+           if (!isValidURL(res.data)) {
+               alert(res.data);
+               return;
+           }
+           window.open(res.data, "_self")
+       }
+   </script>
+
+</body>
+</html>

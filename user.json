@@ -1,6 +1,6 @@
 {
-    "username": {
-        "location": 1,
-        "posts": []
+    "Anna": {
+        "country": "Australia",
+        "posts": ["No one loves me"]
     }
 }

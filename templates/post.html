@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Thoughts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3e5f5; /* Pastel purple background */
+            color: #4a148c; /* Dark purple text */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        .left-side, .right-side {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-side {
+            background-color: #ede7f6; /* Lighter pastel purple */
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .right-side {
+            background-color: #d1c4e9; /* Even lighter pastel purple */
+            flex: 1.5;
+        }
+
+        h1, h2 {
+            color: #4a148c;
+            margin-bottom: 20px;
+        }
+
+        textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #7e57c2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5e35b1;
+        }
+
+        .post-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .post-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .reaction-buttons {
+            margin-top: 10px;
+        }
+
+        .reaction-buttons button {
+            background-color: #7e57c2;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .reaction-buttons button:hover {
+            background-color: #5e35b1;
+        }
+
+        .delete-button {
+            background-color: #ef5350;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section select {
+            width: calc(100% - 20px);
+        }
+
+        .filter-section button {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .no-posts-message {
+            font-size: 16px;
+            color: #4a148c;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left Side: Create a New Post -->
+    <div class="left-side">
+        <h2>Create a New Post</h2>
+        <textarea id="new-post-content" placeholder="What's on your mind?" rows="6"></textarea>
+        <label for="current-emotion">Current Emotion:</label>
+        <select id="current-emotion">
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="anxious">Anxious</option>
+            <option value="angry">Angry</option>
+        </select>
+        <label for="post-hashtag">Hashtag:</label>
+        <select id="post-hashtag">
+            <option value="">-- Select a Hashtag --</option>
+            <option value="depression">#depression</option>
+            <option value="toxic">#toxic</option>
+            <option value="relationship">#relationship</option>
+            <option value="gay">#gay</option>
+            <option value="bisexual">#bisexual</option>
+            <option value="breakup">#breakup</option>
+            <option value="breakdown">#breakdown</option>
+            <option value="gender">#gender</option>
+            <option value="empty">#empty</option>
+            <option value="failure">#failure</option>
+            <option value="bodyshaming">#bodyshaming</option>
+            <option value="domestic violence">#domestic violence</option>
+            <option value="anxiety">#anxiety</option>
+            <option value="lonely">#lonely</option>
+            <option value="family">#family</option>
+            <option value="stressed">#stressed</option>
+        </select>
+        <button onclick="createPost()">Post</button>
+    </div>
+
+    <!-- Right Side: Filter and Display Posts -->
+    <div class="right-side">
+        <div class="filter-section">
+            <h2>Filter Posts by Hashtag</h2>
+            <select id="hashtag-filter">
+                <option value="">-- Select a Hashtag --</option>
+                <option value="depression">#depression</option>
+                <option value="toxic">#toxic</option>
+                <option value="relationship">#relationship</option>
+                <option value="gay">#gay</option>
+                <option value="bisexual">#bisexual</option>
+                <option value="breakup">#breakup</option>
+                <option value="breakdown">#breakdown</option>
+                <option value="gender">#gender</option>
+                <option value="empty">#empty</option>
+                <option value="failure">#failure</option>
+                <option value="bodyshaming">#bodyshaming</option>
+                <option value="domestic violence">#domestic violence</option>
+                <option value="anxiety">#anxiety</option>
+                <option value="lonely">#lonely</option>
+                <option value="family">#family</option>
+                <option value="stressed">#stressed</option>
+            </select>
+            <button onclick="filterPosts()">Filter</button>
+        </div>
+        <div id="filtered-post-list">
+            <!-- Filtered posts will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    let posts = [];
+
+    // Example posts for each hashtag
+    const examplePosts = {
+        'depression': [
+            { content: "I'm struggling today, feeling so low and disconnected.", emotion: "sad", hashtag: "depression" },
+            { content: "It's hard to see the light at the end of the tunnel.", emotion: "lonely", hashtag: "depression" }
+        ],
+        'toxic': [
+            { content: "I realized how toxic some relationships can be.", emotion: "angry", hashtag: "toxic" },
+            { content: "Cutting out toxic people has been hard but necessary.", emotion: "anxious", hashtag: "toxic" }
+        ],
+        'relationship': [
+            { content: "Relationships are complicated but worth the effort.", emotion: "happy", hashtag: "relationship" },
+            { content: "Communicating better has really improved my relationship.", emotion: "happy", hashtag: "relationship" }
+        ],
+        // Add more example posts for other hashtags...
+    };
+
+    // Function to display filtered posts based on hashtag
+    function filterPosts() {
+        const hashtag = document.getElementById('hashtag-filter').value.trim().toLowerCase();
+        const filteredPostList = document.getElementById('filtered-post-list');
+        filteredPostList.innerHTML = ''; // Clear previous filtered posts
+
+        // Get user-created posts and example posts for the selected hashtag
+        const userPosts = posts.filter(post => post.hashtag.toLowerCase() === hashtag);
+        const predefinedPosts = examplePosts[hashtag] || [];
+
+        // Combine the posts
+        const filteredPosts = userPosts.concat(predefinedPosts);
+
+        // Display each filtered post
+        filteredPosts.forEach((post, index) => {
+            const postContainer = document.createElement('div');
+            postContainer.className = 'post-container';
+
+            const postContent = document.createElement('p');
+            postContent.className = 'post-content';
+            postContent.textContent = `${post.content} (Feeling: ${post.emotion}) #${post.hashtag}`;
+            postContainer.appendChild(postContent);
+
+            const reactionButtons = document.createElement('div');
+            reactionButtons.className = 'reaction-buttons';
+
+            ['❤️', '👍', '🌟'].forEach(emoji => {
+                const button = document.createElement('button');
+                button.textContent = emoji;
+                button.onclick = () => reactToPost(index, emoji);
+                reactionButtons.appendChild(button);
+            });
+
+            postContainer.appendChild(reactionButtons);
+
+            if (userPosts.includes(post)) {
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => removePost(index);
+                postContainer.appendChild(deleteButton);
+            }
+
+            filteredPostList.appendChild(postContainer);
+        });
+
+        // If no posts are available, show example posts or a message
+        if (filteredPosts.length === 0) {
+            const noMatchMessage = document.createElement('p');
+            noMatchMessage.className = 'no-posts-message';
+            noMatchMessage.textContent = 'No posts available for this hashtag.';
+            filteredPostList.appendChild(noMatchMessage);
+        }
+    }
+
+    // Function to create a new post
+    function createPost() {
+        const content = document.getElementById('new-post-content').value;
+        const emotion = document.getElementById('current-emotion').value;
+        const hashtag = document.getElementById('post-hashtag').value;
+
+        if (content.trim() && hashtag.trim()) {
+            posts.push({ content, emotion, hashtag });
+            document.getElementById('new-post-content').value = '';
+            filterPosts(); // Automatically apply the current filter after adding a new post
+        } else {
+            alert('Please write something and select a hashtag before posting!');
+        }
+    }
+
+    // Function to remove a post
+    function removePost(index) {
+        if (confirm('Are you sure you want to delete this post?')) {
+            posts.splice(index, 1);
+            filterPosts(); // Reapply the filter after deleting a post
+        }
+    }
+
+    // Function to handle reactions to a post
+    function reactToPost(index, emoji) {
+        alert(`You reacted to the post with ${emoji}`);
+    }
+</script>
+</body>
+</html>
