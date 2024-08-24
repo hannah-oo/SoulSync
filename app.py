@@ -16,5 +16,9 @@ def signup():
 def login():
     return render_template('login.html')
 
+@app.route('/recommendation')
+def recommendation():
+    return render_template('recommendation.html')
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, use_reloader=True)

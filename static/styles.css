@@ -67,6 +67,16 @@ h2.comment{
     margin-top: 0px;
 }
 
+h3.comment{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: courier;
+    color: #000000;
+}
+
+
 .account-register-text{
     display: block;
     text-align: center;
@@ -90,7 +100,7 @@ h2.comment{
 }
 
 .dropdown-country{
-    width: 400px; /* Width of the dropdown */
+    width: 400px;
     margin: 0 auto; 
 }
 
@@ -150,4 +160,40 @@ h2.comment{
 
 .x-btn:hover {
     background-color: #b870d4;
+}
+
+.choose-three-hashtags{
+    width: 800px; 
+    height: 450px;
+    background-color: rgba(243, 224, 255, 0.5);
+    border-radius: 25px; 
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position:absolute;
+}
+
+.hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.hashtag {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.hashtag.selected {
+    background-color: #b870d4;
+    color: white;
+    border-color: #b870d4;
 }
