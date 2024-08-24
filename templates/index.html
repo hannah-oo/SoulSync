@@ -1,109 +1,124 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <style>
-      #map {position: absolute; top: 0; right: 0; bottom: 0; left: 0;        width: 100vw;
-        height: 100vh;}
-        #map-container {
-        position: relative;
-        width: 80vw; /* Adjust width as needed */
-        height: 80vh; /* Adjust height as needed */
-        margin: 20px auto; /* Center the div horizontally */
-        border: 2px solid #ccc; /* Optional: border for visibility */
-      }
-      .circle-label {
-        background: lightblue;
-        border-radius: 50%;
-        color: black;
-        text-align: center;
-        line-height: 28px; /* Adjust this to vertically center the text */
-        width: 30px; /* Initial size of the circle */
-        height: 30px; /* Initial size of the circle */
-        font-size: 14px; /* Font size */
-        font-weight: bold;
-        /* border: 2px solid black; Circle border */
-        box-shadow: 0 0 5px rgba(0,0,0,0.5); /* Optional shadow */
-      }
+        #map {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #search-container {
+            position: absolute;
+            bottom: 20px; /* Adjust this value to control the vertical spacing from the bottom */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            z-index: 1000;
+            background-color: white; /* Optional: Add background for better visibility */
+            padding: 10px; /* Optional: Add padding for spacing */
+            border-radius: 5px; /* Optional: Add rounded corners */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
+        }
+        #search-input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+        }
+        #search-button {
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .label {
+            background-color: transparent; 
+            border: none;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0; 
+            font-size: 14px;
+            font-weight: bold;
+            color: #000; 
+            box-sizing: border-box;
+            width: 30px;
+            height: 30px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
 
-        <div id="map">
-            <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px;z-index:999;"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
-          </div>
- 
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search for a country..." />
+        <button id="search-button">Search</button>
+    </div>
+
+    <div id="map">
+        <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px;z-index:999;"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
+    </div>
+
     <p><a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a></p>
     <script>
-      var map = L.map('map').setView([0, 0], 2.5);
-      L.tileLayer('https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=Rb6RSlyQw3mhvmyU4sF3',{
-        tileSize: 512,
-        zoomOffset: -1,
-        minZoom: 2,
-        attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-        crossOrigin: true
-      }).addTo(map);
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 2.5);
+        L.tileLayer('https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=Rb6RSlyQw3mhvmyU4sF3', {
+            tileSize: 512,
+            zoomOffset: -1,
+            minZoom: 2,
+            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+            crossOrigin: true
+        }).addTo(map);
 
+        // List of countries with coordinates and values
+        var countries = [
+            { country: "United States", lat: 37.0902, lon: -95.7129, value: 50 },
+            { country: "Canada", lat: 56.1304, lon: -106.3468, value: 30 },
+            { country: "Brazil", lat: -14.2350, lon: -51.9253, value: 20 },
+            { country: "Australia", lat: -25.2744, lon: 133.7751, value: 25 },
+            { country: "India", lat: 20.5937, lon: 78.9629, value: 40 },
+            { country: "China", lat: 35.8617, lon: 104.1954, value: 60 },
+            // Add more countries and their values as needed
+        ];
 
+        // Create circles and labels for each country
+        countries.forEach(function(country) {
+            // Create a circle
+            L.circle([country.lat, country.lon], {
+                color: '#9BA9FF',
+                fillColor: '#AFB1FF',
+                fillOpacity: 0.75,
+                radius: country.value * 10000 // Adjust the multiplier as needed
+            }).addTo(map);
 
+            // Create a custom icon with the number
+            L.marker([country.lat, country.lon], {
+                icon: L.divIcon({
+                    className: 'label',
+                    html: country.value.toString(),
+                    iconSize: [30, 30]
+                })
+            }).addTo(map);
+        });
 
-      // Optional: Disable vertical zooming beyond certain latitudes (to prevent map from moving vertically when zooming)
-      var southWest = L.latLng(-85, -Infinity);
-      var northEast = L.latLng(85, Infinity);
-      var bounds = L.latLngBounds(southWest, northEast);
-      map.setMaxBounds(bounds);
+        // Search functionality
+        document.getElementById('search-button').addEventListener('click', function() {
+            var query = document.getElementById('search-input').value.toLowerCase();
 
-      fetch('/coordinates')
-        .then(response => response.json())
-        .then(data => {
-          data.forEach(item => {
-            // Create a circle with dynamic radius based on zoom level
+            var found = countries.find(item => item.country.toLowerCase() === query);
 
-            // Create a div for the label
-            var labelDiv = document.createElement('div');
-            labelDiv.className = 'circle-label';
-            labelDiv.innerHTML = item.number;
-            var size = 20 + (item.number * 5); // Base size + scaling factor per number
-            labelDiv.style.width = size + 'px';
-            labelDiv.style.height = size + 'px';
-            labelDiv.style.lineHeight = size + 'px'; // Center text vertically
-            labelDiv.style.fontSize = (size / 3) + 'px';
-            // Create a custom icon for the label
-            var customIcon = L.divIcon({
-              className: '',
-              html: labelDiv.outerHTML,
-              iconSize: [size, size] // Size of the icon
-            });
-
-            // Create a marker with the custom icon
-            L.marker([item.lat, item.lon], {icon: customIcon}).addTo(map);
-
-            // Adjust the circle and label size based on zoom level
-            map.on('zoom', function() {
-              var zoom = map.getZoom();
-              var radius = calculateRadius(item.number, zoom); // Adjust radius based on zoom level
-              circle.setRadius(radius);
-
-              // Adjust label size based on zoom level
-              var size = 20 + zoom; // Adjust label size
-              labelDiv.style.width = size + 'px';
-              labelDiv.style.height = size + 'px';
-              labelDiv.style.lineHeight = size + 'px';
-              labelDiv.style.fontSize = (size / 2) + 'px'; // Font size relative to circle size
-            });
-          });
-        })
-        .catch(error => console.error('Error loading coordinates:', error));
-      function calculateRadius(number, zoom) {
-        var baseRadius = 50; // Base radius in pixels
-        var scaleFactor = 5; // Scale factor for the number
-        var zoomFactor = 0.5; // Zoom factor to adjust the radius with zoom level
-
-        // Adjust radius: larger number means larger size, and zoom level affects size
-        return baseRadius + (number * scaleFactor) / (zoom * zoomFactor);
-      }
+            if (found) {
+                map.setView([found.lat, found.lon], 5);
+            } else {
+                alert('Country not found');
+            }
+        });
     </script>
-  </body>
+</body>
 </html>
