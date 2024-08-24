@@ -14,27 +14,6 @@
             width: 100vw;
             height: 100vh;
         }
-        #search-container {
-            position: absolute;
-            bottom: 20px; /* Adjust this value to control the vertical spacing from the bottom */
-            left: 50%;
-            transform: translateX(-50%); /* Center horizontally */
-            z-index: 1000;
-            background-color: white; /* Optional: Add background for better visibility */
-            padding: 10px; /* Optional: Add padding for spacing */
-            border-radius: 5px; /* Optional: Add rounded corners */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
-        }
-        #search-input {
-            padding: 8px;
-            width: 300px;
-            font-size: 16px;
-        }
-        #search-button {
-            padding: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
         .label {
             background-color: transparent; 
             border: none;
@@ -55,10 +34,7 @@
 </head>
 <body>
 
-    <div id="search-container">
-        <input type="text" id="search-input" placeholder="Search for a country..." />
-        <button id="search-button">Search</button>
-    </div>
+   
 
     <div id="map">
         <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px;z-index:999;"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
