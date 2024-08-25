@@ -1,19 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Mental Health Thoughts</title>
+    
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3e5f5;
+            color: #4a148c;
+            height: 100vh;
+            position: relative;
+            overflow: hidden; /* Prevents scrolling */
+        }
+
+        /* Styles for the left-side and right-side containers */
+        .left-side, .right-side {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            z-index: 1000; /* Ensures they stay above the map */
+        }
+
+        .left-side {
+            left: 0;
+            background-color: #ede7f6;
+        }
+
+        .right-side {
+            right: 0;
+            background-color: #d1c4e9;
+        }
+
+        h1, h2 {
+            color: #4a148c;
+            margin-bottom: 20px;
+        }
+
+        textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #7e57c2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5e35b1;
+        }
+
+        .post-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .post-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .reaction-buttons {
+            margin-top: 10px;
+        }
+
+        .reaction-buttons button {
+            background-color: #7e57c2;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 2px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .reaction-buttons button:hover {
+            background-color: #5e35b1;
+        }
+
+        .delete-button {
+            background-color: #ef5350;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 3px 6px; /* Reduced padding */
+            font-size: 14px; /* Slightly smaller font */
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: auto; /* Ensure the width is only as wide as the content */
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section select {
+            width: calc(100% - 20px);
+        }
+
+        .filter-section button {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .no-posts-message {
+            font-size: 16px;
+            color: #4a148c;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Styles for the map */
         #map {
             position: absolute;
             top: 0;
-            right: 0;
+            right: 300px; /* Leaves space for the right-side container */
             bottom: 0;
-            left: 0;
-            width: 100vw;
+            left: 300px; /* Leaves space for the left-side container */
+            z-index: 1; /* Positioned behind the content */
+            width: calc(100vw - 600px); /* Adjusts width based on side containers */
             height: 100vh;
         }
+
         .label {
             background-color: transparent; 
             border: none;
@@ -24,8 +161,8 @@
             font-weight: bold;
             color: #000; 
             box-sizing: border-box;
-            width: 40px; /* Adjusted size */
-            height: 40px; /* Adjusted size */
+            width: 30px;
+            height: 30px; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -34,11 +171,76 @@
 </head>
 <body>
 
-    <div id="map">
-        <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px;z-index:999;"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- Left-side container -->
+    <div class="left-side">
+        <h2>Create a New Post</h2>
+        <textarea id="new-post-content" placeholder="What's on your mind?" rows="6"></textarea>
+        <label for="current-emotion">Current Emotion:</label>
+        <select id="current-emotion">
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="anxious">Anxious</option>
+            <option value="angry">Angry</option>
+        </select>
+        <label for="post-hashtag">Hashtag:</label>
+        <select id="post-hashtag">
+            <option value="">-- Select a Hashtag --</option>
+            <option value="depression">#depression</option>
+            <option value="toxic">#toxic</option>
+            <option value="relationship">#relationship</option>
+            <option value="gay">#gay</option>
+            <option value="bisexual">#bisexual</option>
+            <option value="breakup">#breakup</option>
+            <option value="breakdown">#breakdown</option>
+            <option value="gender">#gender</option>
+            <option value="empty">#empty</option>
+            <option value="failure">#failure</option>
+            <option value="bodyshaming">#bodyshaming</option>
+            <option value="domestic violence">#domestic violence</option>
+            <option value="anxiety">#anxiety</option>
+            <option value="lonely">#lonely</option>
+            <option value="family">#family</option>
+            <option value="stressed">#stressed</option>
+        </select>
+        <button onclick="createPost()">Post</button>
     </div>
 
-    <p><a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a></p>
+    <!-- Right-side container -->
+    <div class="right-side">
+        <div class="filter-section">
+            <h2>Filter Posts by Hashtag</h2>
+            <select id="hashtag-filter">
+                <option value="">-- Select a Hashtag --</option>
+                <option value="depression">#depression</option>
+                <option value="toxic">#toxic</option>
+                <option value="relationship">#relationship</option>
+                <option value="gay">#gay</option>
+                <option value="bisexual">#bisexual</option>
+                <option value="breakup">#breakup</option>
+                <option value="breakdown">#breakdown</option>
+                <option value="gender">#gender</option>
+                <option value="empty">#empty</option>
+                <option value="failure">#failure</option>
+                <option value="bodyshaming">#bodyshaming</option>
+                <option value="domestic violence">#domestic violence</option>
+                <option value="anxiety">#anxiety</option>
+                <option value="lonely">#lonely</option>
+                <option value="family">#family</option>
+                <option value="stressed">#stressed</option>
+            </select>
+            <button onclick="filterPosts()">Filter</button>
+        </div>
+        <div id="filtered-post-list">
+            <!-- Filtered posts will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
     <script>
         let username = "{{username}}";
 
@@ -106,7 +308,7 @@
                 color: '#9BA9FF',
                 fillColor: '#AFB1FF',
                 fillOpacity: 0.75,
-                radius: country.value * 10000 
+                radius: country.value * 10000 // Adjust the multiplier as needed
             }).addTo(map);
 
             // Create a custom icon with the number
@@ -131,6 +333,79 @@
                 alert('Country not found');
             }
         });
+
+        // JavaScript for handling posts and reactions
+
+        // Function to create a new post
+        function createPost() {
+            const content = document.getElementById('new-post-content').value;
+            const emotion = document.getElementById('current-emotion').value;
+            const hashtag = document.getElementById('post-hashtag').value;
+
+            if (content.trim() === '' || hashtag === '') {
+                alert('Please enter a post content and select a hashtag.');
+                return;
+            }
+
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+
+            const postContent = document.createElement('div');
+            postContent.classList.add('post-content');
+            postContent.textContent = content;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', () => postContainer.remove());
+
+            postContainer.appendChild(postContent);
+            postContainer.appendChild(deleteButton);
+
+            document.getElementById('filtered-post-list').appendChild(postContainer);
+
+            // Clear the input fields after posting
+            document.getElementById('new-post-content').value = '';
+            document.getElementById('post-hashtag').value = '';
+        }
+
+        // Function to filter posts by hashtag
+        function filterPosts() {
+            const selectedHashtag = document.getElementById('hashtag-filter').value;
+            const postList = document.getElementById('filtered-post-list');
+            postList.innerHTML = ''; // Clear existing posts
+
+            if (selectedHashtag === '') {
+                postList.innerHTML = '<p class="no-posts-message">Please select a hashtag to filter posts.</p>';
+                return;
+            }
+
+            // Add logic to filter posts based on the selected hashtag
+            // For demonstration, we'll use the sample data again
+            const filteredPosts = [
+                { content: 'I am feeling very #happy today!', hashtag: '#happy' },
+                { content: 'I am feeling very #sad today!', hashtag: '#sad' }
+            ];
+
+            filteredPosts.forEach(post => {
+                if (post.hashtag === selectedHashtag) {
+                    const postContainer = document.createElement('div');
+                    postContainer.classList.add('post-container');
+
+                    const postContent = document.createElement('div');
+                    postContent.classList.add('post-content');
+                    postContent.textContent = post.content;
+
+                    postContainer.appendChild(postContent);
+
+                    postList.appendChild(postContainer);
+                }
+            });
+
+            if (postList.innerHTML === '') {
+                postList.innerHTML = '<p class="no-posts-message">No posts found with the selected hashtag.</p>';
+            }
+        }
     </script>
 </body>
 </html>
