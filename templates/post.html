@@ -279,8 +279,18 @@
         }
     }
 
+    function isValidURL(string) {
+        if (string.length == 0) {
+            return false;
+        }
+        if (string[0] == "/") {
+            return true;
+        }
+        return false;
+    }
+
     // Function to create a new post
-    function createPost() {
+    async function createPost() {
         const content = document.getElementById('new-post-content').value;
         const emotion = document.getElementById('current-emotion').value;
         const hashtag = document.getElementById('post-hashtag').value;
@@ -292,6 +302,19 @@
         } else {
             alert('Please write something and select a hashtag before posting!');
         }
+
+        let url = "{{ url_for('add_post') }}";
+        let res = await axios.post(url, {
+            username: "Anna",
+            post_content: $("#new-post-content").val(),
+            hashtag: $("#post-hashtag").val(),
+            emotion: $("#current-emotion").val()
+        });
+        if (!isValidURL(res.data)) {
+            alert(res.data);
+            return;
+        }
+        window.open(res.data, "_self")
     }
 
     // Function to remove a post

@@ -40,6 +40,8 @@
 
     <p><a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a></p>
     <script>
+        let username = "{{username}}";
+
         // Initialize the map
         var map = L.map('map').setView([0, 0], 2.5);
         L.tileLayer('https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=Rb6RSlyQw3mhvmyU4sF3', {

@@ -116,38 +116,47 @@ def recommendation():
 #     return url_for('/profile', posts=posts)
 
 # redirect to the page for user to input their thoughts
-# @app.route('/input_thoughts')
-# def input_thoughts():
-#     return render_template('input_thoughts.html')
+# when user clicks on the button to create a new post or filter posts by hashtag
+@app.route('/create_post')
+def create_post():
+    return render_template('post.html', username='Anna')
 
 # handle when users click on "input" button in the thoughts input page
 # add the post to both the json files
-# @app.route('/add_post', methods=['POST'])
-# def add_post():
-#     if not request.is_json:
-#         abort(404)
+@app.route('/add_post', methods=['POST'])
+def add_post():
+    if not request.is_json:
+        abort(404)
         
-#     username = request.json.get('username')
-#     post_content = request.json.get('post_content')
-#     hashtag = request.json.get('hashtag')
+    username = request.json.get('username')
+    post_content = request.json.get('post_content')
+    hashtag = request.json.get('hashtag')
+    emotion = request.json.get('emotion')
         
-#     # add to the user's history
-#     with open('user.json', 'r') as f:
-#         data = json.load(f)
-#         data[username]['posts'].append(post_content)
+    # add to the user's history
+    with open('user.json', 'r') as f:
+        data = json.load(f)
+        new_post = {'content': post_content,
+                    'hashtag': hashtag,
+                    'emotion': emotion}
+        data[username]['posts'].append(new_post)
         
-#     with open('user.json', 'w') as f:
-#         json.dump(data, f, indent=4)
+    with open('user.json', 'w') as f:
+        json.dump(data, f, indent=4)
     
-#     # add to the posts list
-#     with open('posts.json', 'r') as f:
-#         data = json.load(f)
-#         data[hashtag].append([username, post_content])
+    # add to the posts list
+    with open('posts.json', 'r') as f:
+        data = json.load(f)
+        new_post = {'username': username,
+                    'content': post_content,
+                    'hashtag': hashtag,
+                    'emotion': emotion}
+        data[hashtag].append(new_post)
         
-#     with open('posts.json', 'w') as f:
-#         json.dump(data, f, indent=4)
+    with open('posts.json', 'w') as f:
+        json.dump(data, f, indent=4)
     
-#     return url_for('home', username=username)
+    return url_for('home', username=username)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
