@@ -21,6 +21,17 @@ function selectHashtag(element) {
     }
 }
 
+document.getElementById('proceed').addEventListener('click', () => {
+    fetch('/save_rec_hashtags', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ hashtags: selectedHashtags }),
+    })
+    .then(response => response.json())
+});
+
 document.getElementById('countryDropdown').addEventListener('change', function() {
     if (this.value) {
         this.style.color = '#000'; 
