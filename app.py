@@ -9,6 +9,8 @@ hashtags = {'depression', 'toxic', 'relationship', 'gay', 'bisexual',
             'breakup', 'breakdown', 'gender',
             'empty', 'failure', 'bodyshaming', 'domestic violence', 'anxiety', 'lonely', 'family', 'stressed'}
 
+data_dict = {}
+
 # groups = {1 : ['depressed', 'empty', 'breakdown', 'failure'],
 #             2: ['boyfriend', 'relationship', 'girlfriend', 'breakup', 'ex'],
 #             3: ['gender', 'gay', 'lesbian', 'bisexual'],
@@ -71,12 +73,27 @@ def signup_user():
             json.dump(data, f, indent=4)
         return url_for('home', username=username)
     
+
+    
     return "Username already exists"
 
 @app.route('/recommendation')
 def recommendation():
     return render_template('recommendation.html')
 
+@app.route('/home', methods=['GET'])
+def read_data():
+    file_path = 'SoulSync/posts.json'
+    try:
+        with open(file_path, 'r') as json_file:
+            data_dict = json.load(json_file)
+        return jsonify(data_dict)  # Returns JSON response
+    except FileNotFoundError:
+        return jsonify({'error': 'File not found'}), 404
+    except json.JSONDecodeError:
+        return jsonify({'error': 'Error decoding JSON'}), 500
+
+    
 # @app.route('/coordinates')
 # def get_coordinates():
 #     return jsonify(coordinates)

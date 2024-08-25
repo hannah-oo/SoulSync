@@ -1,27 +1,62 @@
 {
-    "depression": {
-        "countries": [
-            {"lat": 51.505, "lon": -0.09, "number": 1},
-            {"lat": 21.515, "lon": -0.1, "number": 2},
-            {"lat": 31.525, "lon": -0.12, "number": 7}
-        ],
-        "posts": [{"Anna": "No one loves me"},
-                {"Bob": "I don't feeling like living"},
-                {"Cinderella": "What's the meaning of life?"}]
+    "post_1": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I can't shake this constant feeling of dread.",
+        "tags": ["depression", "anxiety", "toxic"]
     },
-    "toxic": {},
-    "relationship": {},
-    "gay": {},
-    "bisexual": {},
-    "breakup": {},
-    "breakdown": {},
-    "gender": {},
-    "empty": {},
-    "failure": {},
-    "bodyshaming": {},
-    "domestic violence": {},
-    "anxiety": {},
-    "lonely": {},
-    "family": {},
-    "stressed": {}
+    "post_2": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I'm exhausted from pretending everything is okay when it's not.",
+        "tags": ["depression", "anxiety", "toxic"]
+    },
+    "post_3": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I'm feeling trapped in a cycle of negativity, and it's taking a toll on me.",
+        "tags": ["depression", "anxiety", "toxic"]
+    },
+    "post_4": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I'm losing hope that things will ever get better.",
+        "tags": ["depression"]
+    },
+    "post_5": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "It's like I'm sinking, and I don't know how to reach the surface.",
+        "tags": ["depression", "anxiety", "toxic"]
+    },
+    "post_6": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I'm feeling trapped in a cycle of negativity, and it's taking a toll on me.",
+        "tags": ["toxic"]
+    },
+    "post_7": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "The anxiety and sadness are overwhelming, and I don't know how to cope.",
+        "tags": ["toxic"]
+    },
+    "post_8": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I feel disconnected from everyone and everything.",
+        "tags": ["depression"]
+    },
+    "post_9": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I feel disconnected from everyone and everything.",
+        "tags": ["toxic"]
+    },
+    "post_10": {
+        "lat": -25.2744,
+        "lon": 133.7751,
+        "content": "I'm feeling trapped in a cycle of negativity, and it's taking a toll on me.",
+        "tags": ["depression", "anxiety", "toxic"]
+    }
 }

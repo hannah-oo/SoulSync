@@ -234,7 +234,25 @@
             <button onclick="filterPosts()">Filter</button>
         </div>
         <div id="filtered-post-list">
-            <!-- Filtered posts will be dynamically added here -->
+            <!-- Fixed example post -->
+            <div class="post-container">
+                <div class="post-content">
+                    Hannah lost to a rubber duck #depression. 
+                </div>
+
+
+                <button class="delete-button">X</button>
+            </div>
+
+            <div class="post-container">
+                <div class="post-content">
+                    I am not smart as a duck #failure. 
+                </div>
+
+
+                <button class="delete-button">X</button>
+            </div>
+            <!-- Additional posts will be dynamically added here -->
         </div>
     </div>
 
@@ -248,161 +266,34 @@
             tileSize: 512,
             zoomOffset: -1,
             minZoom: 2,
-            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-            crossOrigin: true
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // List of countries with coordinates and values
-        var countries = [
-            { country: "United States", lat: 37.0902, lon: -95.7129, value: 50 },
-            { country: "Canada", lat: 56.1304, lon: -106.3468, value: 30 },
-            { country: "Brazil", lat: -14.2350, lon: -51.9253, value: 20 },
-            { country: "Australia", lat: -25.2744, lon: 133.7751, value: 30 },
-            { country: "India", lat: 20.5937, lon: 78.9629, value: 40 },
-            { country: "China", lat: 35.8617, lon: 104.1954, value: 60 },
-            { country: "Germany", lat: 51.1657, lon: 10.4515, value: 45 },
-            { country: "South Africa", lat: -30.5595, lon: 22.9375, value: 35 },
-            { country: "Russia", lat: 61.5240, lon: 105.3188, value: 55 },
-            { country: "Japan", lat: 36.2048, lon: 138.2529, value: 65 },
-            { country: "United Kingdom", lat: 55.3781, lon: -3.4360, value: 50 },
-            { country: "France", lat: 46.6034, lon: 1.8883, value: 45 },
-            { country: "Italy", lat: 41.8719, lon: 12.5674, value: 40 },
-            { country: "Spain", lat: 40.4637, lon: -3.7038, value: 35 },
-            { country: "Mexico", lat: 23.6345, lon: -102.5528, value: 25 },
-            { country: "Indonesia", lat: -0.7893, lon: 113.9213, value: 20 },
-            { country: "Saudi Arabia", lat: 23.8859, lon: 45.0792, value: 30 },
-            { country: "Turkey", lat: 38.9637, lon: 35.2433, value: 35 },
-            { country: "Argentina", lat: -38.4161, lon: -63.6167, value: 20 },
-            { country: "Egypt", lat: 26.8206, lon: 30.8025, value: 25 },
-            { country: "Iran", lat: 32.4279, lon: 53.6880, value: 30 },
-            { country: "Thailand", lat: 15.8700, lon: 100.9925, value: 25 },
-            { country: "Vietnam", lat: 14.0583, lon: 108.2772, value: 20 },
-            { country: "Poland", lat: 51.9194, lon: 19.1451, value: 40 },
-            { country: "Netherlands", lat: 52.1326, lon: 5.2913, value: 45 },
-            { country: "Sweden", lat: 60.1282, lon: 18.6435, value: 40 },
-            { country: "Belgium", lat: 50.8503, lon: 4.3517, value: 35 },
-            { country: "Switzerland", lat: 46.8182, lon: 8.2275, value: 50 },
-            { country: "Austria", lat: 47.5162, lon: 14.5501, value: 40 },
-            { country: "Norway", lat: 60.4720, lon: 8.4689, value: 35 },
-            { country: "Ireland", lat: 53.4129, lon: -8.2439, value: 30 },
-            { country: "Portugal", lat: 39.3999, lon: -8.2245, value: 25 },
-            { country: "New Zealand", lat: -40.9006, lon: 174.8860, value: 20 },
-            { country: "South Korea", lat: 35.9078, lon: 127.7669, value: 55 },
-            { country: "Singapore", lat: 1.3521, lon: 103.8198, value: 60 },
-            { country: "Malaysia", lat: 4.2105, lon: 101.9758, value: 25 },
-            { country: "Philippines", lat: 12.8797, lon: 121.7740, value: 20 },
-            { country: "Pakistan", lat: 30.3753, lon: 69.3451, value: 30 },
-            { country: "Bangladesh", lat: 23.6858, lon: 90.3563, value: 25 },
-            { country: "Colombia", lat: 4.5709, lon: -74.2973, value: 20 },
-            { country: "Chile", lat: -35.6751, lon: -71.5430, value: 25 },
-            { country: "Peru", lat: -9.1900, lon: -75.0152, value: 20 }
+        // Example posts data for demonstration
+        var posts = [
+            { id: 1, content: 'Feeling great today!', emotion: 'happy', hashtags: ['happy'], coordinates: [51.505, -0.09] },
+            { id: 2, content: 'Struggling with anxiety lately.', emotion: 'anxious', hashtags: ['anxiety'], coordinates: [48.8566, 2.3522] }
+            // Add more posts as needed
         ];
 
-
-        // Create circles and labels for each country
-        countries.forEach(function(country) {
-            // Create a circle
-            L.circle([country.lat, country.lon], {
-                color: '#9BA9FF',
-                fillColor: '#AFB1FF',
-                fillOpacity: 0.75,
-                radius: country.value * 10000 // Adjust the multiplier as needed
-            }).addTo(map);
-
-            // Create a custom icon with the number
-            L.marker([country.lat, country.lon], {
-                icon: L.divIcon({
-                    className: 'label',
-                    html: country.value.toString(),
-                    iconSize: [30, 30]
-                })
-            }).addTo(map);
+        // Add markers to the map
+        posts.forEach(post => {
+            L.marker(post.coordinates, { icon: L.divIcon({ className: 'label', html: '#' + post.hashtags[0] }) })
+                .addTo(map)
+                .bindPopup(`<strong>${post.content}</strong><br><em>${post.emotion}</em>`);
         });
 
-        // Search functionality
-        document.getElementById('search-button').addEventListener('click', function() {
-            var query = document.getElementById('search-input').value.toLowerCase();
-
-            var found = countries.find(item => item.country.toLowerCase() === query);
-
-            if (found) {
-                map.setView([found.lat, found.lon], 5);
-            } else {
-                alert('Country not found');
-            }
-        });
-
-        // JavaScript for handling posts and reactions
-
-        // Function to create a new post
+        // Function to create a new post (placeholder)
         function createPost() {
-            const content = document.getElementById('new-post-content').value;
-            const emotion = document.getElementById('current-emotion').value;
-            const hashtag = document.getElementById('post-hashtag').value;
-
-            if (content.trim() === '' || hashtag === '') {
-                alert('Please enter a post content and select a hashtag.');
-                return;
-            }
-
-            const postContainer = document.createElement('div');
-            postContainer.classList.add('post-container');
-
-            const postContent = document.createElement('div');
-            postContent.classList.add('post-content');
-            postContent.textContent = content;
-
-            const deleteButton = document.createElement('button');
-            deleteButton.classList.add('delete-button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.addEventListener('click', () => postContainer.remove());
-
-            postContainer.appendChild(postContent);
-            postContainer.appendChild(deleteButton);
-
-            document.getElementById('filtered-post-list').appendChild(postContainer);
-
-            // Clear the input fields after posting
-            document.getElementById('new-post-content').value = '';
-            document.getElementById('post-hashtag').value = '';
+            // Add logic to create a new post
+            alert('Post created!');
         }
 
-        // Function to filter posts by hashtag
+        // Function to filter posts (placeholder)
         function filterPosts() {
-            const selectedHashtag = document.getElementById('hashtag-filter').value;
-            const postList = document.getElementById('filtered-post-list');
-            postList.innerHTML = ''; // Clear existing posts
-
-            if (selectedHashtag === '') {
-                postList.innerHTML = '<p class="no-posts-message">Please select a hashtag to filter posts.</p>';
-                return;
-            }
-
-            // Add logic to filter posts based on the selected hashtag
-            // For demonstration, we'll use the sample data again
-            const filteredPosts = [
-                { content: 'I am feeling very #happy today!', hashtag: '#happy' },
-                { content: 'I am feeling very #sad today!', hashtag: '#sad' }
-            ];
-
-            filteredPosts.forEach(post => {
-                if (post.hashtag === selectedHashtag) {
-                    const postContainer = document.createElement('div');
-                    postContainer.classList.add('post-container');
-
-                    const postContent = document.createElement('div');
-                    postContent.classList.add('post-content');
-                    postContent.textContent = post.content;
-
-                    postContainer.appendChild(postContent);
-
-                    postList.appendChild(postContainer);
-                }
-            });
-
-            if (postList.innerHTML === '') {
-                postList.innerHTML = '<p class="no-posts-message">No posts found with the selected hashtag.</p>';
-            }
+            // Add logic to filter posts
+            alert('Filter applied!');
         }
     </script>
 </body>
