@@ -1,13 +1,36 @@
 {
     "depression": {
         "countries": [
-            {"lat": 51.505, "lon": -0.09, "number": 1},
-            {"lat": 21.515, "lon": -0.1, "number": 2},
-            {"lat": 31.525, "lon": -0.12, "number": 7}
+            {
+                "lat": 51.505,
+                "lon": -0.09,
+                "number": 1
+            },
+            {
+                "lat": 21.515,
+                "lon": -0.1,
+                "number": 2
+            },
+            {
+                "lat": 31.525,
+                "lon": -0.12,
+                "number": 7
+            }
         ],
-        "posts": [{"Anna": "No one loves me"},
-                {"Bob": "I don't feeling like living"},
-                {"Cinderella": "What's the meaning of life?"}]
+        "posts": [
+            {
+                "content": "I am feeling very #happy today!",
+                "hashtag": "happy"
+            },
+            {
+                "content": "I am feeling very #sad today!",
+                "hashtag": "sad"
+            },
+            {
+                "content": ":(",
+                "hashtag": "depression"
+            }
+        ]
     },
     "toxic": {},
     "relationship": {},

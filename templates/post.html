@@ -224,6 +224,37 @@
         // Add more example posts for other hashtags...
     };
 
+    // Function to display all example posts initially
+    function displayAllExamplePosts() {
+        const filteredPostList = document.getElementById('filtered-post-list');
+        filteredPostList.innerHTML = ''; // Clear previous content
+
+        for (const hashtag in examplePosts) {
+            examplePosts[hashtag].forEach(post => {
+                const postContainer = document.createElement('div');
+                postContainer.className = 'post-container';
+
+                const postContent = document.createElement('p');
+                postContent.className = 'post-content';
+                postContent.textContent = `${post.content} (Feeling: ${post.emotion}) #${post.hashtag}`;
+                postContainer.appendChild(postContent);
+
+                const reactionButtons = document.createElement('div');
+                reactionButtons.className = 'reaction-buttons';
+
+                ['❤️', '👍', '🌟'].forEach(emoji => {
+                    const button = document.createElement('button');
+                    button.textContent = emoji;
+                    button.onclick = () => reactToPost(emoji);
+                    reactionButtons.appendChild(button);
+                });
+
+                postContainer.appendChild(reactionButtons);
+                filteredPostList.appendChild(postContainer);
+            });
+        }
+    }
+
     // Function to display filtered posts based on hashtag
     function filterPosts() {
         const hashtag = document.getElementById('hashtag-filter').value.trim().toLowerCase();
@@ -270,7 +301,7 @@
             filteredPostList.appendChild(postContainer);
         });
 
-        // If no posts are available, show example posts or a message
+        // If no posts are available, show a message
         if (filteredPosts.length === 0) {
             const noMatchMessage = document.createElement('p');
             noMatchMessage.className = 'no-posts-message';
@@ -279,18 +310,8 @@
         }
     }
 
-    function isValidURL(string) {
-        if (string.length == 0) {
-            return false;
-        }
-        if (string[0] == "/") {
-            return true;
-        }
-        return false;
-    }
-
     // Function to create a new post
-    async function createPost() {
+    function createPost() {
         const content = document.getElementById('new-post-content').value;
         const emotion = document.getElementById('current-emotion').value;
         const hashtag = document.getElementById('post-hashtag').value;
@@ -302,19 +323,6 @@
         } else {
             alert('Please write something and select a hashtag before posting!');
         }
-
-        let url = "{{ url_for('add_post') }}";
-        let res = await axios.post(url, {
-            username: "Anna",
-            post_content: $("#new-post-content").val(),
-            hashtag: $("#post-hashtag").val(),
-            emotion: $("#current-emotion").val()
-        });
-        if (!isValidURL(res.data)) {
-            alert(res.data);
-            return;
-        }
-        window.open(res.data, "_self")
     }
 
     // Function to remove a post
@@ -326,9 +334,12 @@
     }
 
     // Function to handle reactions to a post
-    function reactToPost(index, emoji) {
+    function reactToPost(emoji) {
         alert(`You reacted to the post with ${emoji}`);
     }
+
+    // Display all example posts when the page loads
+    window.onload = displayAllExamplePosts;
 </script>
 </body>
 </html>

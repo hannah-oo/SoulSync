@@ -240,9 +240,8 @@
 
     <!-- Leaflet JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        let username = "{{username}}";
 
         // Initialize the map
         var map = L.map('map').setView([0, 0], 2.5);
@@ -337,7 +336,7 @@
         // JavaScript for handling posts and reactions
 
         // Function to create a new post
-        function createPost() {
+        async function createPost() {
             const content = document.getElementById('new-post-content').value;
             const emotion = document.getElementById('current-emotion').value;
             const hashtag = document.getElementById('post-hashtag').value;
@@ -370,7 +369,7 @@
         }
 
         // Function to filter posts by hashtag
-        function filterPosts() {
+        async function filterPosts() {
             const selectedHashtag = document.getElementById('hashtag-filter').value;
             const postList = document.getElementById('filtered-post-list');
             postList.innerHTML = ''; // Clear existing posts
@@ -383,8 +382,8 @@
             // Add logic to filter posts based on the selected hashtag
             // For demonstration, we'll use the sample data again
             const filteredPosts = [
-                { content: 'I am feeling very #happy today!', hashtag: '#happy' },
-                { content: 'I am feeling very #sad today!', hashtag: '#sad' }
+                { content: ':(((', hashtag: 'depression' },
+                { content: 'I cannot even compare to a duck', hashtag: 'depression' }
             ];
 
             filteredPosts.forEach(post => {

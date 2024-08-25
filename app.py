@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, abort, url_for
+from flask import Flask, render_template, jsonify, request, abort, url_for, redirect
 from flask_socketio import SocketIO
 import json
 
@@ -41,9 +41,8 @@ def login_user():
     
     with open('user.json', 'r') as f:
         data = json.load(f)
-
     if username in data:
-        return url_for('home', username=username)
+        return redirect(url_for('home', username=username))
     return "Username doesn't exist. Please try again or sign up."
 
 @app.route('/signup')
@@ -69,13 +68,21 @@ def signup_user():
             data[username] = {'country': country,
                               'posts': []}
             json.dump(data, f, indent=4)
-        return url_for('home', username=username)
+        return redirect(url_for('home', username=username))
     
     return "Username already exists"
 
 @app.route('/recommendation')
 def recommendation():
     return render_template('recommendation.html')
+
+# @app.route('/read_data', methods=['POST'])
+# def read_data():
+#     file_path = 'SoulSync/posts.json'
+#     with open(file_path, 'r') as json_file:
+#         data_dict = json.load(json_file)
+#     # print(data_dict)
+#     return redirect(url_for('home', data_dict))
 
 # @app.route('/coordinates')
 # def get_coordinates():
@@ -91,7 +98,7 @@ def recommendation():
 #     with open('posts.json', 'r') as f:
 #         data = json.load(f)
 #         posts = data[hashtag]['posts']
-#     return url_for('/home', posts=posts)
+#     return redirect(url_for('/home', posts=posts))
 
 # get the number of posts in each country
 # @app.route('/get_posts_in_country', methods=['POST'])
@@ -117,46 +124,45 @@ def recommendation():
 
 # redirect to the page for user to input their thoughts
 # when user clicks on the button to create a new post or filter posts by hashtag
-@app.route('/create_post')
-def create_post():
-    return render_template('post.html', username='Anna')
+# @app.route('/create_post')
+# def create_post():
+#     return render_template('post.html', username='Anna')
 
 # handle when users click on "input" button in the thoughts input page
 # add the post to both the json files
-@app.route('/add_post', methods=['POST'])
-def add_post():
-    if not request.is_json:
-        abort(404)
+# @app.route('/add_post', methods=['POST'])
+# def add_post():
+#     if not request.is_json:
+#         abort(404)
         
-    username = request.json.get('username')
-    post_content = request.json.get('post_content')
-    hashtag = request.json.get('hashtag')
-    emotion = request.json.get('emotion')
+#     username = request.json.get('username')
+#     post_content = request.json.get('post_content')
+#     hashtag = request.json.get('hashtag')
+#     emotion = request.json.get('emotion')
         
     # add to the user's history
-    with open('user.json', 'r') as f:
-        data = json.load(f)
-        new_post = {'content': post_content,
-                    'hashtag': hashtag,
-                    'emotion': emotion}
-        data[username]['posts'].append(new_post)
+    # with open('user.json', 'r') as f:
+    #     data = json.load(f)
+    #     new_post = {'content': post_content,
+    #                 'hashtag': hashtag,
+    #                 'emotion': emotion}
+    #     print(data)
+    #     data[username]['posts'].append(new_post)
         
-    with open('user.json', 'w') as f:
-        json.dump(data, f, indent=4)
+    # with open('user.json', 'w') as f:
+    #     json.dump(data, f, indent=4)
     
     # add to the posts list
-    with open('posts.json', 'r') as f:
-        data = json.load(f)
-        new_post = {'username': username,
-                    'content': post_content,
-                    'hashtag': hashtag,
-                    'emotion': emotion}
-        data[hashtag].append(new_post)
+    # with open('posts.json', 'r') as f:
+    #     data = json.load(f)
+    #     new_post = {'content': post_content,
+    #                 'hashtag': hashtag}
+    #     data[hashtag]["posts"].append(new_post)
         
-    with open('posts.json', 'w') as f:
-        json.dump(data, f, indent=4)
+    # with open('posts.json', 'w') as f:
+    #     json.dump(data, f, indent=4)
     
-    return url_for('home', username=username)
+    # return redirect(url_for('home', username=username))
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
